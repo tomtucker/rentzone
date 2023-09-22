@@ -1,47 +1,41 @@
-# Rentzone Demo app
+# Website Image for AWS
 
-This project uses Docker to locally build an image to be pused to Amazon Elastic Container Registry (ECR) to be used with either EC2 or ECS deployments.
+This project uses Docker to locally build an image to be pushed to Amazon Elastic Container Registry (ECR) to be used with either EC2 or ECS projects.
+
+This project, by itself, will not result in a functioning web application. It memorializes how to pass sensitive information when building Docker images and how to push an image to Amazon Elastic Container Registry.
 
 ## Tools Used
-Locally generated key pair
-SSH Client installed locally
-GitHub
-Git
-Visual Studio Code
-Docker Hub
-Docker
-AWS Account
-AWS CLI
+
+* Bash
+* SSH Client
+* Git
+* Visual Studio Code
+* Docker
+* AWS CLI
 
 ## AWS Resources & Features
 
-VPC
-Inernet Gateway
-Availability Zones
-Public Subnets
-Private Subnets
-Public Route Table
-Main Route Table
-Security Groups
-Relational Database Service
-Route 53
+* Amazon Elastic Container Registry (ECR)
 
 ## Prerequisites
 
 * Tools and accounts listed above
-* SSH key associated with your account
+* SSH Key pair
+* GitHub Account
+* SSH key associated with your GitHub account
+* GitHub Personal Access Token
 
     >This key will be used for programmatic access so a passphrase is discouraged.
 
 * GitHub personal access token
 * Web application
-    >THis repo includes a sample web application derived from Fleetcart that requires an accompanying datsabase to function.
+    >This repo includes a sample web application derived from Fleetcart that requires an accompanying datsabase to function.
 
 ## Steps
 
 1. Identify sensitive data that should not be commited to GitHub nor exposed in the Docker image.
 
-2. Create Dockerfile using build argument syntax to receive sensitive data. See `Dockerfile`.
+2. Create Dockerfile using build argument syntax to receive sensitive data. See [Dockerfile](Dockerfile).
 
 3. <a name="step3"></a>Create shell script to pass build arguments to `docker build`. See `build_image.sh` for Linux/Mac or `build_image.ps1` for Windows.
 
