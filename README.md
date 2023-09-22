@@ -37,10 +37,10 @@ This project, by itself, will not result in a functioning web application. It me
 
 2. Create Dockerfile using build argument syntax to receive sensitive data. See [Dockerfile](Dockerfile).
 
-3. <a name="step3"></a>Create shell script to pass build arguments to `docker build`. See `build_image.sh` for Linux/Mac or `build_image.ps1` for Windows.
+3. <a name="step3"></a>Create shell script to pass build arguments to `docker build`. See [build_image.sh](build_image.sh) for Linux/Mac or [build_image.ps1](build_image.ps1) for Windows.
 
     >[!IMPORTANT]
-    > **Do not commit this shell script to your repository with sensitive data**
+    > **Do not commit the modified version of this shell script to your repository with sensitive data!**
 
 4. Execute modified shell script to build image
 
