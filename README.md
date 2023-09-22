@@ -39,9 +39,12 @@ Route 53
 
 ## Steps
 
-1. Identify sensitive data that should not be commited to GitHub nor exposed in the Docker image
+1. Identify sensitive data that should not be commited to GitHub nor exposed in the Docker image.
+
 2. Create Dockerfile using build argument syntax to receive sensitive data. See `Dockerfile`.
+
 3. <a name="step3"></a>Create shell script to pass build arguments to `docker build`. See `build_image.sh` for Linux/Mac or `build_image.ps1` for Windows.
+
 4. Execute shell script to build image
 
     ```bash
@@ -49,15 +52,18 @@ Route 53
     ./build_image.sh
     ```
 
+    >[!IMPORTANT]
     > **Do not commit this shell script to your repository with sensitive data**
 
-5. Install AWS CLI
+5. Install and configure [AWS CLI](https://aws.amazon.com/cli/) if necessary.
+
 6. <a name="step6"></a>Create Repositiory in AWS ECR
 
     ```bash
     aws ecr create-repository --repository-name <repository-name> --region <region>
     ```
 
+    >[!IMPORTANT]
     >Replace `<repository-name>` and `<region>` with the desired name for the ECR repository and the AWS Region for the repositiry, respectively.
 
 7. Retag the image
@@ -66,13 +72,24 @@ Route 53
     docker tag <image-tag> <repository-uri>
     ```
 
-8. Push image to Amazon Elastic Container Registry (ECR)
+    >[!IMPORTANT]
+    >Replace `<image-tag>` with the local Docker tag specified with the `-t` option in the `docker build` script in [Step 3](#step3).
+
+    >[!IMPORTANT]
+    >Replace `<repository-uri>` with the URI of the Amazon ECR Repository created in [Step 6](#step6). The URI can be seen using:
+    >
+    >```bash
+    >aws ecr describe-repositories
+    >```
+
+8. <a name="step8"></a>Push image to Amazon Elastic Container Registry (ECR)
     1. Retag local Docker image
 
         ```bash
         docker tag <image-tag> <repository-uri>
         ```
 
+        >[!IMPORTANT]
         >Replace `<image-tag>` with the local Docker tag specified with the `-t` option in the `docker build` script in [Step 3](#step3).
 
         >[!IMPORTANT]
@@ -92,5 +109,7 @@ Route 53
 
     3. Push Docker image to ECR repository
 
-
-9. 
+    ```bash
+    docker push <repository-uri>
+    ```
+    > Use `<repository-uri>` value from [Step 8](#step8)
