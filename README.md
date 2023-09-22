@@ -45,17 +45,20 @@ Route 53
 
 3. <a name="step3"></a>Create shell script to pass build arguments to `docker build`. See `build_image.sh` for Linux/Mac or `build_image.ps1` for Windows.
 
-4. Execute shell script to build image
+    >[!IMPORTANT]
+    > **Do not commit this shell script to your repository with sensitive data**
+
+4. Execute modified shell script to build image
 
     ```bash
     chmod +x build_image.sh
     ./build_image.sh
     ```
 
-    >[!IMPORTANT]
-    > **Do not commit this shell script to your repository with sensitive data**
-
 5. Install and configure [AWS CLI](https://aws.amazon.com/cli/) if necessary.
+
+    [!NOTE]
+    It is recommended to create an IAM user with Programmatic Access to use with AWS CLI.
 
 6. <a name="step6"></a>Create Repositiory in AWS ECR
 
@@ -66,7 +69,7 @@ Route 53
     >[!IMPORTANT]
     >Replace `<repository-name>` and `<region>` with the desired name for the ECR repository and the AWS Region for the repositiry, respectively.
 
-7. Retag the image
+7. <a name="step7"></a>Retag the image
 
     ```bash
     docker tag <image-tag> <repository-uri>
@@ -82,34 +85,31 @@ Route 53
     >aws ecr describe-repositories
     >```
 
-8. <a name="step8"></a>Push image to Amazon Elastic Container Registry (ECR)
-    1. Retag local Docker image
+8. <a name="step9"></a>Login to Amazon ECR
 
-        ```bash
-        docker tag <image-tag> <repository-uri>
-        ```
+    ```bash
+    aws ecr get-login-password | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+    ```
 
-        >[!IMPORTANT]
-        >Replace `<image-tag>` with the local Docker tag specified with the `-t` option in the `docker build` script in [Step 3](#step3).
+    >[!IMPORTANT]
+    >Replace `<aws_account_id>` with your AWS Account number. This can be copied from the AWS Management Console by selecting the profile name in the upper right corner of the page.
 
-        >[!IMPORTANT]
-        >Replace `<repository-uri>` with the ECR repository name used in [Step 6](#step6).
+    >[!IMPORTANT]
+    >Repalce `<region>` with the AWS region specified in [Step 6](#step6)
 
-    2. Login to Amazon ECR
-
-        ```bash
-        aws ecr get-login-password | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
-        ```
-
-        >[!IMPORTANT]
-        >Replace `<aws_account_id>` with your AWS Account number. This can be copied from the AWS Management Console by selecting the profile name in the upper right corner of the page.
-
-        >[!IMPORTANT]
-        >Repalce `<region>` with the AWS region specified in [Step 6](#step6)
-
-    3. Push Docker image to ECR repository
+9. <a name="step9"></a>Push image to Amazon Elastic Container Registry (ECR)
 
     ```bash
     docker push <repository-uri>
     ```
-    > Use `<repository-uri>` value from [Step 8](#step8)
+
+    >[!IMPORTANT]
+    >Replace `<repository-uri>` with the ECR repository name used in [Step 6](#step6).
+
+10. Push Docker image to ECR repository
+
+    ```bash
+    docker push <repository-uri>
+    ```
+
+    > Use `<repository-uri>` value from [Step 7](#step7).
