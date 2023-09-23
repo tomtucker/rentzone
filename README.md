@@ -29,11 +29,11 @@ This project, by itself, will not result in a functioning web application. It me
 
 * GitHub personal access token
 * Web application
-    >This repo includes a sample web application derived from Fleetcart that requires an accompanying datsabase to function.
+    >This repo includes a sample web application derived from Fleetcart that requires an accompanying database to function.
 
 ## Steps
 
-1. Identify sensitive data that should not be commited to GitHub nor exposed in the Docker image.
+1. Identify sensitive data that should not be committed to GitHub nor exposed in the Docker image.
 
 2. Create Dockerfile using build argument syntax to receive sensitive data. See [Dockerfile](Dockerfile).
 
@@ -54,16 +54,16 @@ This project, by itself, will not result in a functioning web application. It me
     [!NOTE]
     It is recommended to create an IAM user with Programmatic Access to use with AWS CLI.
 
-6. <a name="step6"></a>Create Repositiory in AWS ECR
+6. <a name="step6"></a>Create Repository in AWS ECR
 
     ```bash
     aws ecr create-repository --repository-name <repository-name> --region <region>
     ```
 
     >[!IMPORTANT]
-    >Replace `<repository-name>` and `<region>` with the desired name for the ECR repository and the AWS Region for the repositiry, respectively.
+    >Replace `<repository-name>` and `<region>` with the desired name for the ECR repository and the AWS Region for the  repository, respectively.
 
-7. <a name="step7"></a>Retag the image
+7. <a name="step7"></a>Re-tag the image
 
     ```bash
     docker tag <image-tag> <repository-uri>
@@ -89,7 +89,7 @@ This project, by itself, will not result in a functioning web application. It me
     >Replace `<aws_account_id>` with your AWS Account number. This can be copied from the AWS Management Console by selecting the profile name in the upper right corner of the page.
 
     >[!IMPORTANT]
-    >Repalce `<region>` with the AWS region specified in [Step 6](#step6)
+    >Replace `<region>` with the AWS region specified in [Step 6](#step6)
 
 9. <a name="step9"></a>Push image to Amazon Elastic Container Registry (ECR)
 
